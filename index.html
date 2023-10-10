@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Деление диапазона на части</title>
+  </head>
+  <body>
+    <h1>Деление диапазона на части</h1>
+    <label for="rangeStart">Начальное число:</label>
+    <input type="number" id="rangeStart" min="0" max="599" /><br />
+    <label for="rangeEnd">Конечное число:</label>
+    <input type="number" id="rangeEnd" min="1" max="600" /><br />
+    <label for="numParts">Число частей:</label>
+    <input type="number" id="numParts" min="1" max="600" /><br />
+    <button onclick="divideRange()">Разделить</button>
+    <h2>Результат:</h2>
+    <div id="result"></div>
+
+    <script>
+      function divideRange() {
+        const rangeStart = parseInt(
+          document.getElementById("rangeStart").value
+        );
+        const rangeEnd = parseInt(document.getElementById("rangeEnd").value);
+        const numParts = parseInt(document.getElementById("numParts").value);
+
+        if (
+          rangeStart >= 0 &&
+          rangeEnd <= 600 &&
+          rangeStart < rangeEnd &&
+          numParts > 0
+        ) {
+          const rangeSize = Math.ceil((rangeEnd - rangeStart + 1) / numParts);
+          const resultDiv = document.getElementById("result");
+          resultDiv.innerHTML = "";
+
+          let currentStart = rangeStart;
+          for (let i = 0; i < numParts; i++) {
+            const currentEnd = currentStart + rangeSize - 1;
+            if (currentEnd > rangeEnd) {
+              resultDiv.innerHTML += `${currentStart}-${rangeEnd}<br>`;
+              break;
+            }
+            resultDiv.innerHTML += `${currentStart}-${currentEnd}<br>`;
+            currentStart = currentEnd + 1;
+          }
+        } else {
+          alert("Пожалуйста, введите корректные значения.");
+        }
+      }
+    </script>
+  </body>
+</html>
